@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: cadetblue;
+        }
+        form {
+            padding: 30px;
+            background-color: darkgray;
+        }
+        input {
+            text-decoration: none;
+            border-style: none;
+            box-shadow: none;
+            width: 100%;
+            padding: 5px;
+            margin: 6px 0;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <form action="/users/register" method="post">
+            <label for="Name">Name</label>
+            <input type="text" name="name" id="Name" placeholder="Enter Your Name">
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+
+            <label for="age">Age</label>
+            <input type="number" name="age" id="age">
+
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone" id="phone">
+
+            <input type="submit" value="Register">
+        </form>
+    </main>
+</body>
+</html>
