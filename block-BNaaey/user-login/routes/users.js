@@ -43,11 +43,12 @@ router.post('/login', (req,res,next) => {
 
       // wrong password
       if (!result) {
-        res.redirect('/users/login')
+        return res.redirect('/users/login')
       }
 
       // correct password
       req.session.userId = user.id
+      console.log('userId', user.id)
       res.redirect('/users/dashboard')
     })
   })
