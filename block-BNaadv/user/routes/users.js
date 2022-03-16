@@ -65,6 +65,7 @@ router.post('/login', (req,res,next) => {
 
       //password match
       req.session.userId = user.id
+      console.log(req.session)
       res.send('Login Successfull')
     })
   })
