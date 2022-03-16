@@ -4,5 +4,27 @@ body {
 }
 
 a {
+  text-decoration: none;
+  padding: 6px 15px;
   color: #00B7FF;
+  background-color: black;
+  margin: 10px 15px;
+}
+
+body {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: cadetblue;
+}
+form {
+  padding: 30px;
+  background-color: darkgray;
+}
+input {
+  text-decoration: none;
+  border-style: none;
+  box-shadow: none;
+  width: 100%;
+  padding: 5px;
+  margin: 6px 0;
 }

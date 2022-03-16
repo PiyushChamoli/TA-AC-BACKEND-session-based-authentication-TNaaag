@@ -8,11 +8,11 @@ router.get('/', (req,res,next) => {
 
 router.get('/register', (req,res,next) => {
   console.log(req.flash('error'))
-  res.render('userRegisterForm')
+  res.render('userRegisterForm', { error: req.flash('error')[0] })
 })
 
 router.get('/login', (req,res,next) => {
-  res.render('userLogin')
+  res.render('userLogin', { error: req.flash('error')[0] })
 })
 
 router.get('/dashboard', (req,res,next) => {
@@ -26,6 +26,7 @@ router.post('/login', (req,res,next) => {
 
   //email or passsword field empty
   if (!email || !password) {
+    req.flash('error', 'Email/password is required')
     return res.redirect('/users/login')
   }
 
@@ -35,6 +36,7 @@ router.post('/login', (req,res,next) => {
 
     // null handle
     if(!user) {
+      req.flash('error', 'This email is not registered')
       return res.redirect('/users/login')
     }
 
@@ -44,11 +46,13 @@ router.post('/login', (req,res,next) => {
 
       // wrong password
       if(!result) {
+        req.flash('error', 'Incorrect password')
         return res.redirect('/users/login')
       }
 
       // password match
       req.session.userId = user.id
+      console.log(req.session)
       res.redirect('/users/dashboard')
     })
   })
@@ -56,13 +60,22 @@ router.post('/login', (req,res,next) => {
 
 // Register New User
 router.post('/register', (req,res,next) => {
-  var { email, password } = req.body
-  if (password.length<4) {
-    req.flash('error', 'Password should contain min 4 char')
-    return res.redirect('/users/register')
-  }
   User.create(req.body, (err,user) => {
-    if (err) return next(err)
+    if (err) {
+      
+      // email already registered
+      if(err.code === 11000) {
+        req.flash('error', 'this email is taken')
+        return res.redirect('/users/register')
+      }
+
+      // password less than 4
+      if (err.name === 'ValidationError') {
+        req.flash('error', err.message)
+        return res.redirect('/users/register')
+      }
+      return res.json({ err })
+    }
     res.redirect('/')
   })
 })
@@ -71,7 +84,7 @@ router.post('/register', (req,res,next) => {
 router.get('/logout', (req,res) => {
   req.session.destroy()
   res.clearCookie('connect.sid')
-  res.redirect('/users/login')
+  res.redirect('/users')
 })
 
 module.exports = router;

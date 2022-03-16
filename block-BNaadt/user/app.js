@@ -8,6 +8,8 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
 
+require('dotenv').config()
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
